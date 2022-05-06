@@ -14,6 +14,8 @@ import {
 import axios from 'axios'
 import { styled } from '@mui/material/styles'
 import { Box } from '@mui/system'
+import DataAlert from './DataAlert'
+import { Link } from 'react-router-dom'
 
 const Root = styled('div')(({ theme }) => ({
   padding: theme.spacing(1),
@@ -28,6 +30,7 @@ const Search = () => {
 
   const [quote, setQuote] = React.useState('')
   const [data, setData] = React.useState([])
+  const [error, setError] = React.useState('True')
   const API = {
     KEY: '74edba20',
     BASE: 'http://www.omdbapi.com/',
@@ -39,11 +42,16 @@ const Search = () => {
         .get(`${API.BASE}?s=${quote}&apikey=${API.KEY}`)
         .then((res) => {
           console.log(res)
-          setData(res.data.Search)
+          setQuote('')
+          if (res.data.Response === 'True') {
+            setData(res.data.Search)
+            setError(res.data.Response)
+          } else {
+            setError(res.data.Response)
+          }
         })
         .catch((err) => {
-          console.log(err)
-          setQuote('')
+          console.log('12121')
         })
     }
   }
@@ -53,6 +61,7 @@ const Search = () => {
       <Container
         maxWidth="xl"
         sx={{
+          mt: 4,
           bgcolor: '#f4f4f4',
           height: '300px',
           borderRadius: 2,
@@ -68,7 +77,6 @@ const Search = () => {
         </Typography>
         <div className="search">
           <div className="search__item">
-            {quote}
             <Input
               value={quote}
               onChange={(e) => setQuote(e.target.value)}
@@ -81,47 +89,52 @@ const Search = () => {
       </Container>
       <Container maxWidth="xl">
         {/* Item <-----------------------------------------------------------------> card */}
-        <Grid container spacing={1}>
-          {data.map((item) => (
-            <Grid item xs={3} key={item.key}>
-              <Card sx={{ maxWidth: 245, mt: 5, bgcolor: '#333' }}>
-                <CardActionArea>
-                  <Box sx={{ height:360 }}>
-                    <CardMedia
-                      component="img"
-                      height="100%"
-                      image={item.Poster}
-                      sx={{ p: 1, objectFit: 'cover' }}
-                    />
-                  </Box>
-                  <CardContent sx={{ p: 0 }}>
-                    <Typography
-                      gutterBottom
-                      variant="h5"
-                      component="div"
-                      textAlign="center"
-                      color="#fff"
-                    >
-                      {item.Title.slice(0, 20)}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-                <CardActions>
-                  <Box>
-                    <Button
-                      sx={{ display: 'flex', justifyContent: 'center' }}
-                      size="small"
-                      color="primary"
-                      variant="contained"
-                    >
-                      WATCH NOW
-                    </Button>
-                  </Box>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+
+        {error === 'True' ? (
+          <Grid container spacing={1}>
+            {data.map((item) => (
+              <Grid item xs={3}>
+                <Card sx={{ maxWidth: 245, mt: 5, bgcolor: '#333' }}>
+                  <CardActionArea>
+                    <Box sx={{ height: 360 }}>
+                      <CardMedia
+                        component="img"
+                        height="100%"
+                        image={item.Poster}
+                        sx={{ p: 1, objectFit: 'cover' }}
+                      />
+                    </Box>
+                    <CardContent sx={{ p: 0 }}>
+                      <Typography
+                        gutterBottom
+                        variant="h5"
+                        component="div"
+                        textAlign="center"
+                        color="#fff"
+                      >
+                        {item.Title.slice(0, 16)}...
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                  <CardActions>
+                    <Link to={`search/${item.imdbID}`} >
+                      <Button
+                        sx={{ display: 'flex', justifyContent: 'center' }}
+                        size="small"
+                        color="primary"
+                        variant="contained"
+                      >
+                        WATCH NOW
+                      </Button>
+                    </Link>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        ) : (
+          <DataAlert />
+        )}
       </Container>
     </Root>
   )
