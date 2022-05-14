@@ -33,7 +33,7 @@ const Search = () => {
   const [error, setError] = React.useState('True')
   const API = {
     KEY: '74edba20',
-    BASE: 'http://www.omdbapi.com/',
+    BASE: 'https://www.omdbapi.com/',
   }
 
   const getQuote = (event) => {
@@ -51,7 +51,7 @@ const Search = () => {
           }
         })
         .catch((err) => {
-          console.log('12121')
+          console.log(err)
         })
     }
   }
