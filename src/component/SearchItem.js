@@ -1,9 +1,18 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 
-import {Grid, Paper, Typography, ButtonBase, styled  } from '@mui/material';
-import { minWidth } from '@mui/system';
+import {
+  Grid,
+  Paper,
+  Typography,
+  ButtonBase,
+  styled,
+  Container,
+  Stack,
+  Button,
+} from '@mui/material'
+import { Box, minWidth } from '@mui/system'
 
 const SearchItem = () => {
   const { id } = useParams()
@@ -12,7 +21,7 @@ const SearchItem = () => {
   //http://www.omdbapi.com/?i=tt0099785&apikey=74edba20
   const API = {
     KEY: '74edba20',
-    BASE: 'http://www.omdbapi.com/',
+    BASE: 'https://www.omdbapi.com/',
   }
 
   useEffect(() => {
@@ -21,64 +30,92 @@ const SearchItem = () => {
       .then((res) => {
         console.log(res)
         setData(res.data)
-      console.log(res.data)
-
+        console.log(res.data)
       })
       .catch((err) => {
         console.log(err)
       })
-  }, [])
+  }, [id])
 
   const Img = styled('img')({
     margin: 'auto',
     display: 'block',
     maxWidth: '100%',
     maxHeight: '100%',
-  });
-  
-
-
+  })
 
   return (
     <div>
-      <Paper
-      maxWidth="xl"
-      sx={{
-        p: 2,
-        mt: 4,
-        maxWidth:900,
-
-      }}
-    >
-        
-      <Grid container spacing={2} 
+      <Container
+        maxWidth="xl"
+        sx={{
+          mt: 4,
+          maxWidth: 900,
+        }}
       >
-        <Grid item>
-          <ButtonBase sx={{ height: '100%'}}>
-            <Img alt="complex" src={data.Poster} />
-          </ButtonBase>
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div">
-                Standard license
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                Full resolution 1920x1080 • JPEG
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                ID: 1030114
-              </Typography>
-            </Grid>
+        <Paper
+          sx={{
+            p: 2,
+          }}
+        >
+          <Grid container spacing={2}>
             <Grid item>
+              <ButtonBase sx={{ height: '100%' }}>
+                <Img alt="Poster photo" src={data.Poster} />
+              </ButtonBase>
             </Grid>
+            <Grid item xs={12} sm container>
+              <Grid item xs container direction="column" spacing={2}>
+                <Grid item xs>
+                  <Typography
+                    gutterBottom
+                    variant="h4"
+                    component="div"
+                    textAlign="center"
+                  >
+                    {data.Title}
+                  </Typography>
+                  <Typography gutterBottom variant="h5" component="div">
+                    Genre: {data.Genre}
+                  </Typography>
+                  <Typography variant="h6" gutterBottom>
+                    Released: {data.Released}
+                  </Typography>
+                  <Typography variant="h6" color="text.secondary" gutterBottom>
+                    Rated: {data.Rated}
+                  </Typography>
+                  <Typography variant="h6" color="text.secondary" gutterBottom>
+                    ImdbVotes: {data.imdbVotes}
+                  </Typography>
+                  <Typography variant="h6" color="text.secondary" gutterBottom>
+                    Director: {data.Director}
+                  </Typography>
+                  <Typography variant="h6" color="text.secondary" gutterBottom>
+                    Writer: {data.Writer}
+                  </Typography>
+                  <Typography variant="h6" color="text.secondary" gutterBottom>
+                    Actors: {data.Actors}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Box sx={{ p: 2 }}>
+              <hr />
+              <Typography variant="h5" color="" sx={{mt:4}} >
+                Plot: {data.Plot}
+              </Typography>
+              <Button
+              sx={{mt:2}}
+                href={`https://www.imdb.com/title/${data.imdbID}/`}
+                target="_blank"
+                variant="contained"
+              >
+                View IMDB
+              </Button>
+            </Box>
           </Grid>
-          <Grid item>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Paper>
+        </Paper>
+      </Container>
     </div>
   )
 }
