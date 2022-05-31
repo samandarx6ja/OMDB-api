@@ -39,6 +39,12 @@ body {
   margin-top: 20px;
 }
 
+.css-a5rdam-MuiGrid-root {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
 @media screen and (max-width: 600px) {
   .css-mhc70k-MuiGrid-root {
     -webkit-box-pack: center;
