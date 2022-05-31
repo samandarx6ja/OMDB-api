@@ -17,3 +17,19 @@ body{
     width: 900px;
   }
 }
+
+.loaderspin{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+
+@media screen and (max-width: 600px) {
+  .css-mhc70k-MuiGrid-root{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }  
+}

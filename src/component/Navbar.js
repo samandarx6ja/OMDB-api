@@ -15,7 +15,7 @@ const Navbar = () => {
             <LiveTvIcon />
           </IconButton>
           <Typography variant="h5" color="inherit" component="div">
-            Movie info
+            Movie info | Api | Material UI | React
           </Typography>
         </Toolbar>
       </AppBar>

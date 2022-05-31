@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { styled } from '@mui/material/styles';
 import axios from 'axios'
 
 import {
@@ -7,16 +8,16 @@ import {
   Paper,
   Typography,
   ButtonBase,
-  styled,
   Container,
-  Stack,
   Button,
+  Box
 } from '@mui/material'
-import { Box, minWidth } from '@mui/system'
+
 
 const SearchItem = () => {
   const { id } = useParams()
   const [data, setData] = React.useState([{}])
+  const [loader, setLoader] = React.useState(false)
 
   //http://www.omdbapi.com/?i=tt0099785&apikey=74edba20
   const API = {
@@ -28,25 +29,22 @@ const SearchItem = () => {
     axios
       .get(`${API.BASE}?i=${id}&apikey=${API.KEY}`)
       .then((res) => {
+        setLoader(false)
         console.log(res)
         setData(res.data)
         console.log(res.data)
+        setLoader(true)
       })
       .catch((err) => {
         console.log(err)
       })
   }, [id])
 
-  const Img = styled('img')({
-    margin: 'auto',
-    display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
-  })
 
   return (
     <div>
-      <Container
+      {loader ? (
+        <Container
         maxWidth="xl"
         sx={{
           mt: 4,
@@ -59,9 +57,9 @@ const SearchItem = () => {
           }}
         >
           <Grid container spacing={2}>
-            <Grid item>
-              <ButtonBase sx={{ height: '100%' }}>
-                <Img alt="Poster photo" src={data.Poster} />
+            <Grid item  >
+              <ButtonBase >
+                <img alt="Poster photo" src={data.Poster} />
               </ButtonBase>
             </Grid>
             <Grid item xs={12} sm container>
@@ -69,6 +67,7 @@ const SearchItem = () => {
                 <Grid item xs>
                   <Typography
                     gutterBottom
+                    
                     variant="h4"
                     component="div"
                     textAlign="center"
@@ -116,6 +115,11 @@ const SearchItem = () => {
           </Grid>
         </Paper>
       </Container>
+      ):(
+        <div className='loaderspin'>
+          <img src={require('../loader/loader2.gif')} alt=''/>
+        </div> 
+      )}
     </div>
   )
 }

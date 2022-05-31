@@ -13,9 +13,10 @@ import {
 } from '@mui/material'
 import axios from 'axios'
 import { styled } from '@mui/material/styles'
-import { Box } from '@mui/system'
+import { Box, color } from '@mui/system'
 import DataAlert from './DataAlert'
 import { Link } from 'react-router-dom'
+import { makeStyles } from '@mui/styles';
 
 const Root = styled('div')(({ theme }) => ({
   padding: theme.spacing(1),
@@ -24,10 +25,17 @@ const Root = styled('div')(({ theme }) => ({
   },
 }))
 
+const useStyles = makeStyles( (theme) => ({
+  wrap: {
+  display:'flex',
+  justifyContent:'center',
+  
+},
+}));
 const Search = () => {
   //http://www.omdbapi.com/?i=tt3896198&apikey=74edba20
   //key = 74edba20
-
+  const classes = useStyles();
   const [quote, setQuote] = React.useState('')
   const [data, setData] = React.useState([])
   const [error, setError] = React.useState('True')
@@ -55,6 +63,8 @@ const Search = () => {
         })
     }
   }
+
+
 
   return (
     <Root>
@@ -87,14 +97,15 @@ const Search = () => {
           </div>
         </div>
       </Container>
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" >
         {/* Item <-----------------------------------------------------------------> card */}
 
         {error === 'True' ? (
-          <Grid container spacing={1}>
+          <Grid container spacing={1}  >
             {data.map((item) => (
-              <Grid item xs={3}>
-                <Card sx={{ maxWidth: 245, mt: 5, bgcolor: '#333' }}>
+              <Grid item   lg={3} md={3} className={classes.wrap} >
+               
+                <Card sx={{ maxWidth: 245, mt: 5, bgcolor: '#333',}}>
                   <CardActionArea>
                     <Box sx={{ height: 360 }}>
                       <CardMedia
@@ -103,6 +114,7 @@ const Search = () => {
                         image={item.Poster}
                         sx={{ p: 1, objectFit: 'cover' }}
                       />
+                      
                     </Box>
                     <CardContent sx={{ p: 0 }}>
                       <Typography
