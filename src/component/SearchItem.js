@@ -126,14 +126,14 @@ const SearchItem = () => {
               <Box sx={{ p: 2 }}>
                 {data.Plot === 'N/A' ? (
                   ''
-                ) : (<>
-                  <hr />
-                  <Typography variant="h5" color="" sx={{ mt: 2 }}>
-                    Plot: {data.Plot}
-                  </Typography>
+                ) : (
+                  <>
+                    <hr />
+                    <Typography variant="h5" color="" sx={{ mt: 2 }}>
+                      Plot: {data.Plot}
+                    </Typography>
                   </>
-                )
-                }
+                )}
 
                 <Button
                   sx={{ mt: 2 }}
