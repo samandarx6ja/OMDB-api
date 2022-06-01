@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { styled } from '@mui/material/styles';
+import { styled } from '@mui/material/styles'
 import axios from 'axios'
 
 import {
@@ -10,9 +10,8 @@ import {
   ButtonBase,
   Container,
   Button,
-  Box
+  Box,
 } from '@mui/material'
-
 
 const SearchItem = () => {
   const { id } = useParams()
@@ -40,85 +39,118 @@ const SearchItem = () => {
       })
   }, [id])
 
-
   return (
     <div>
       {loader ? (
         <Container
-        maxWidth="xl"
-        sx={{
-          mt: 4,
-          maxWidth: 900,
-        }}
-      >
-        <Paper
+          maxWidth="xl"
           sx={{
-            p: 2,
+            mt: 4,
+            maxWidth: 900,
           }}
         >
-          <Grid container spacing={2}>
-            <Grid item  >
-              <ButtonBase >
-                <img alt="Poster photo" src={data.Poster} />
-              </ButtonBase>
-            </Grid>
-            <Grid item xs={12} sm container>
-              <Grid item xs container direction="column" spacing={2}>
-                <Grid item xs>
-                  <Typography
-                    gutterBottom
-                    
-                    variant="h4"
-                    component="div"
-                    textAlign="center"
-                  >
-                    {data.Title}
-                  </Typography>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Genre: {data.Genre}
-                  </Typography>
-                  <Typography variant="h6" gutterBottom>
-                    Released: {data.Released}
-                  </Typography>
-                  <Typography variant="h6" color="text.secondary" gutterBottom>
-                    Rated: {data.Rated}
-                  </Typography>
-                  <Typography variant="h6" color="text.secondary" gutterBottom>
-                    ImdbVotes: {data.imdbVotes}
-                  </Typography>
-                  <Typography variant="h6" color="text.secondary" gutterBottom>
-                    Director: {data.Director}
-                  </Typography>
-                  <Typography variant="h6" color="text.secondary" gutterBottom>
-                    Writer: {data.Writer}
-                  </Typography>
-                  <Typography variant="h6" color="text.secondary" gutterBottom>
-                    Actors: {data.Actors}
-                  </Typography>
+          <Paper
+            sx={{
+              p: 2,
+            }}
+          >
+            <Grid container spacing={2}>
+              <Grid item>
+                <ButtonBase sx={{ height: 446, width: '100%' }}>
+                  <img
+                    src={
+                      data.Poster === 'N/A'
+                        ? require('../loader/not-found.jpg')
+                        : data.Poster
+                    }
+                    alt=""
+                  />
+                </ButtonBase>
+              </Grid>
+              <Grid item xs={12} sm container>
+                <Grid item xs container direction="column" spacing={2}>
+                  <Grid item xs>
+                    <Typography
+                      gutterBottom
+                      variant="h4"
+                      component="div"
+                      textAlign="center"
+                    >
+                      {data.Title}
+                    </Typography>
+                    <Typography gutterBottom variant="h5" component="div">
+                      Genre: {data.Genre}
+                    </Typography>
+                    <Typography variant="h6" gutterBottom>
+                      Released: {data.Released}
+                    </Typography>
+                    <Typography
+                      variant="h6"
+                      color="text.secondary"
+                      gutterBottom
+                    >
+                      Rated: {data.Rated}
+                    </Typography>
+                    <Typography
+                      variant="h6"
+                      color="text.secondary"
+                      gutterBottom
+                    >
+                      ImdbVotes: {data.imdbVotes}
+                    </Typography>
+                    <Typography
+                      variant="h6"
+                      color="text.secondary"
+                      gutterBottom
+                    >
+                      Director: {data.Director}
+                    </Typography>
+                    <Typography
+                      variant="h6"
+                      color="text.secondary"
+                      gutterBottom
+                    >
+                      Writer: {data.Writer}
+                    </Typography>
+                    <Typography
+                      variant="h6"
+                      color="text.secondary"
+                      gutterBottom
+                    >
+                      Actors: {data.Actors}
+                    </Typography>
+                  </Grid>
                 </Grid>
               </Grid>
+
+              <Box sx={{ p: 2 }}>
+                {data.Plot === 'N/A' ? (
+                  ''
+                ) : (<>
+                  <hr />
+                  <Typography variant="h5" color="" sx={{ mt: 2 }}>
+                    Plot: {data.Plot}
+                  </Typography>
+                  </>
+                )
+                }
+
+                <Button
+                  sx={{ mt: 2 }}
+                  href={`https://www.imdb.com/title/${data.imdbID}/`}
+                  target="_blank"
+                  variant="contained"
+                >
+                  View IMDB
+                </Button>
+              </Box>
             </Grid>
-            <Box sx={{ p: 2 }}>
-              <hr />
-              <Typography variant="h5" color="" sx={{mt:4}} >
-                Plot: {data.Plot}
-              </Typography>
-              <Button
-              sx={{mt:2}}
-                href={`https://www.imdb.com/title/${data.imdbID}/`}
-                target="_blank"
-                variant="contained"
-              >
-                View IMDB
-              </Button>
-            </Box>
-          </Grid>
-        </Paper>
-      </Container>
-      ):(
-        <div className='loaderspin'>
-          <img src={require('../loader/loader2.gif')} alt=''/>
-        </div> 
+          </Paper>
+        </Container>
+      ) : (
+        <div className="loaderspin">
+          <img src={require('../loader/loader2.gif')} alt="" />
+        </div>
       )}
     </div>
   )

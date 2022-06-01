@@ -111,10 +111,9 @@ const Search = () => {
                       <CardMedia
                         component="img"
                         height="100%"
-                        image={item.Poster}
+                        src={ item.Poster === 'N/A' ? require('../loader/not-found.jpg') : item.Poster }
                         sx={{ p: 1, objectFit: 'cover' }}
                       />
-                      
                     </Box>
                     <CardContent sx={{ p: 0 }}>
                       <Typography
