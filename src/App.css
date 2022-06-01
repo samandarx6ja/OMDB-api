@@ -39,6 +39,18 @@ body {
   margin-top: 20px;
 }
 
+.css-tuxzvu {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.css-isbt42 {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
 .css-a5rdam-MuiGrid-root {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
